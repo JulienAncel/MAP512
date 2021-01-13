@@ -1,3 +1,5 @@
+import numpy as np
+
 class Coefficient:
     def __init__(self,gamma,eta):
         '''
@@ -29,4 +31,14 @@ class PolynomialCoefficient(Coefficient):
     def __init__(self, alpha=1, beta=1):
         gamma = lambda n : 1 / (n + 1) ** alpha
         eta = lambda n : 1 / (n + 1) ** beta
+        super().__init__(gamma, eta)
+
+
+class LogarithmicCoefficient(Coefficient):
+    '''
+    The logarithmic coefficient with 1/(log(n)^alpha) for gamma and 1/(log(n)^beta) for eta on step n.
+    '''
+    def init(self, alpha=1, beta=1):
+        gamma = lambda n : 1 / np.log(n + 1) ** alpha
+        eta = lambda n : 1 / np.log(n + 1) ** beta
         super().__init__(gamma, eta)

@@ -65,4 +65,7 @@ class Simulation():
         for test_function in test_collection:
             self.nu_f(test_function)
         plt.legend(loc="best")
+        alpha = - np.log(self.coefficient.gamma(1)) / np.log(2)
+        beta = - np.log(self.coefficient.eta(1)) / np.log(2)
+        plt.title("alpha = %.2f \n beta = %.2f"%(alpha,beta))
         plt.show()

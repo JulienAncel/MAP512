@@ -20,3 +20,7 @@ test_collection.append(TestFunction(
     "x^2")
     )
 
+test_collection.append(TestFunction(
+    lambda x : 1 / (1 + x**2) + 2 / (1 + x**2) ** 2 - 4 / (1 + x**2) ** 3 ,
+    "A(1 / (1 + x**2) )")
+    )

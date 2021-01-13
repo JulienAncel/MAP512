@@ -17,10 +17,17 @@ d = 1
 
 n = int(1e3)
 
+alpha_poly_sup = 1
+beta_poly_sup = 1
+grille_puissance = np.linspace(0.1, 1, num=10)
+
 model = OrnsteinUhlenbeck(theta, mu, sigma, X0, d)
 coeff = ClassicalCoefficient()
-coeff = PolynomialCoefficient(1/3, 1/3)
 
-simulation = Simulation(model, coeff)
-simulation.run(n)
-simulation.test_functions()
+for alpha in grille_puissance:
+    for beta in grille_puissance:
+        coeff = PolynomialCoefficient(alpha, beta)
+
+        simulation = Simulation(model, coeff)
+        simulation.run(n)
+        simulation.test_functions()
