@@ -50,7 +50,7 @@ class Simulation():
             self.weights[step] = self.coefficient.eta(step)
             self.invariant_law[step] = np.copy(self.X)
 
-    def nu_f(self, f=lambda x : x):
+    def nu_f(self, f=lambda x : x, MODE_DISPLAY = False):
         # Test of nu(f) = expectation of the invariant distribution.
         nu_f_n = np.zeros(self.invariant_law.shape)
         nu_f_n[0] = self.invariant_law[0]
@@ -58,14 +58,17 @@ class Simulation():
         for i in range(1, self.n):
             H += self.weights[i]
             nu_f_n[i] = nu_f_n[i-1] + self.weights[i]/H * (f(self.invariant_law[i]) - nu_f_n[i-1])
-        print("nu of ({}) is equal to {}.".format(f, nu_f_n[-1]))
-        plt.plot(nu_f_n, label=f)
+        if MODE_DISPLAY:
+            print("nu of ({}) is equal to {}.".format(f, nu_f_n[-1]))
+            #plt.plot(nu_f_n, label=str(f))
+            plt.plot(nu_f_n, label=str(f)+" with "+str(self.coefficient))
+        return nu_f_n[-1]
 
-    def test_functions(self):
+    def test_functions(self, MODE_DISPLAY = False):
+        nu_f_values = []
         for test_function in test_collection:
-            self.nu_f(test_function)
-        plt.legend(loc="best")
-        alpha = - np.log(self.coefficient.gamma(1)) / np.log(2)
-        beta = - np.log(self.coefficient.eta(1)) / np.log(2)
-        plt.title("alpha = %.2f \n beta = %.2f"%(alpha,beta))
-        plt.show()
+            nu_f_values.append(self.nu_f(test_function, MODE_DISPLAY))
+
+        if MODE_DISPLAY:
+            plt.legend(loc="best")
+        return np.array(nu_f_values)
