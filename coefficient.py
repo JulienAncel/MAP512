@@ -11,8 +11,25 @@ class Coefficient:
         eta : sequence N->R+
             Weights.
         '''
-        self.gamma = gamma
-        self.eta = eta
+        self.gamma_function = gamma
+        self.eta_function = eta
+        self.reset()
+    
+    def reset(self):
+        self.gamma_sum = 0.
+        self.gamma_2_sum = 0.
+        self.eta_sum = 0.
+
+    def gamma(self, n):
+        step = self.gamma_function(n)
+        self.gamma_sum += step
+        self.gamma_2_sum += step ** 2
+        return step
+    
+    def eta(self, n):
+        step = self.eta_function(n)
+        self.eta_sum += step
+        return step
 
 class ClassicalCoefficient(Coefficient):
     '''

@@ -23,6 +23,7 @@ class Simulation():
         '''
         self.invariant_law = None
         self.weights = None
+        self.coefficient.reset()
     
     def run(self,n):
         '''

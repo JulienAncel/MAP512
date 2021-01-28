@@ -69,3 +69,29 @@ def show_heatmap(nth, mean):
 
 show_heatmap(2, 0.0)
 '''
+
+############# TCL #########################
+'''
+def run(model, coeff, nth_function, MODE_DISPLAY = False):
+    simulation = Simulation(model, coeff)
+    simulation.run(n)
+    return simulation.nu_f(test_collection[nth_function], MODE_DISPLAY=MODE_DISPLAY)
+
+model = OrnsteinUhlenbeck(theta, mu, sigma, X0, d)
+coeff = PolynomialCoefficient(2/3, 1/3)
+nth_function = 2
+simulation = Simulation(model, coeff)
+values = []
+for i in tqdm(range(M)):
+    simulation.reset()
+    simulation.run(n)
+    values.append(simulation.nu_f(test_collection[nth_function], MODE_DISPLAY=False))
+values = np.array(values)
+from scipy import stats
+plt.figure(figsize=(4, 4))
+x = np.linspace(-1.5, 1.5, 1000)
+y = stats.norm.pdf(x, loc=0, scale=np.sqrt(0.21855))
+plt.hist(np.sqrt(simulation.coefficient.gamma_sum) * values, bins=20, density=True)
+plt.plot(x, y)
+plt.show()
+'''
