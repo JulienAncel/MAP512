@@ -1,11 +1,11 @@
-from testfunctions import test_collection
+from src.test.testfunctions import test_collection
 import numpy as np
 import matplotlib.pyplot as plt
 '''
 Implementation of the method in D. Lamberton and G. Pages, 2003.
 '''
-class Simulation():
-    def __init__(self,model,coefficient):
+class Euler():
+    def __init__(self,model,coefficient, MODE_DISPLAY=True):
         '''
         Init the simulation parameters. All of them are instances of classes.
         '''
@@ -13,6 +13,8 @@ class Simulation():
         self.coefficient = coefficient
         self.X = model.X0
         self.random = np.random.normal
+        if MODE_DISPLAY:
+            print("\nTesting with the Euler scheme on "+str(model)+" using "+str(coefficient)+"\n")
     
     def reset(self):
         '''
@@ -65,10 +67,13 @@ class Simulation():
             plt.plot(nu_f_n, label=str(f)+" with "+str(self.coefficient))
         return nu_f_n[-1]
 
-    def test_functions(self, MODE_DISPLAY = False):
+    def test_functions(
+            self, 
+            nb_functions_to_test = list(range(len(test_collection))),
+            MODE_DISPLAY = False):
         nu_f_values = []
-        for test_function in test_collection:
-            nu_f_values.append(self.nu_f(test_function, MODE_DISPLAY))
+        for i in nb_functions_to_test:
+            nu_f_values.append(self.nu_f(test_collection[i], MODE_DISPLAY))
 
         if MODE_DISPLAY:
             plt.legend(loc="best")

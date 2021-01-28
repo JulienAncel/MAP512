@@ -1,6 +1,6 @@
 import numpy as np
 
-class Coefficient:
+class Step:
     def __init__(self,gamma,eta):
         '''
         Parameters
@@ -31,7 +31,7 @@ class Coefficient:
         self.eta_sum += step
         return step
 
-class ClassicalCoefficient(Coefficient):
+class ClassicalStep(Step):
     '''
     The classical coefficient with 1 / n for gamma and eta on step n.
     '''
@@ -41,9 +41,9 @@ class ClassicalCoefficient(Coefficient):
         super().__init__(gamma, eta)
 
     def __str__(self):
-        return "Classical 1/n"
+        return "classical steps with 1/n"
 
-class PolynomialCoefficient(Coefficient):
+class PolynomialStep(Step):
     '''
     The Polynomial coefficient with 1/(n^alpha) for gamma and 1/(n^beta) for eta on step n.
     '''
@@ -55,10 +55,10 @@ class PolynomialCoefficient(Coefficient):
         self.beta = beta
 
     def __str__(self):
-        return ("Polynomial with alpha=%.2f, beta=%.2f"%(self.alpha, self.beta))
+        return ("polynomial steps with alpha=%.2f, beta=%.2f"%(self.alpha, self.beta))
 
 
-class LogarithmicCoefficient(Coefficient):
+class LogarithmicStep(Step):
     '''
     The logarithmic coefficient with 1/(log(n)^alpha) for gamma and 1/(log(n)^beta) for eta on step n.
     '''
@@ -70,4 +70,4 @@ class LogarithmicCoefficient(Coefficient):
         self.beta = beta
 
     def __str__(self):
-        return ("Logarithmic with alpha=%.2f, beta=%.2f"%(self.alpha, self.beta))
+        return ("logarithmic steps with alpha=%.2f, beta=%.2f"%(self.alpha, self.beta))
