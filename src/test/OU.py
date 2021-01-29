@@ -218,6 +218,82 @@ def single_curve_order2(
     plt.legend(loc="best")
     plt.show()    
 
-single_curve_order2()
+#single_curve_order2()
 
 ###################### TCL for Talay scheme (order 2) #########################
+test_instances_order2 = []
+
+#1st case of th 4.1 2020
+test_instances_order2.append(TCL_Test(
+        alpha=1/4,
+        beta=1/3,#no use here
+        mean=0,
+        var=I,
+        rate=lambda n : 2 / np.sqrt(3) * n**(3/8),
+        label="density of N(0, 0.218587)",
+        ))
+
+#2nd case of th 4.1 2020
+test_instances_order2.append(TCL_Test(
+        alpha=1/5,
+        beta=1/3,#no use here
+        mean=0,
+        var=I,
+        rate=lambda n : np.sqrt(5) / 2 * n**(2/5),
+        label="density of N(biais, 0.218587)",
+        ))
+
+#3rd case of th 4.1 2020
+test_instances_order2.append(TCL_Test(
+        alpha=1/6,
+        beta=1/3,#no use here
+        mean=0,
+        var=I,
+        rate=lambda n : 3 / 5 * n**(1/3),
+        label="density of N(biais, 0.218587)",
+        ))
+
+def tcl_order2(
+        test_instance=TCL_Test(),
+        nth_function=2,
+        theta=0.5,
+        mu=0,
+        sigma=1,
+        X0=0,
+        d=1,
+        n=int(1e4),
+        M=500
+        ):
+    model = OrnsteinUhlenbeck(theta, mu, sigma, X0, d)
+
+    def distrib_result(coeff):
+        values = []
+        phi = test_collection[nth_function]
+        simulation = Talay_OU(model, coeff) #replace Euler by order 2 approx
+        for i in range(M):
+            simulation.reset()
+            simulation.run(n)
+            values.append(simulation.nu_f(phi))
+        return np.array(values)
+
+    mean = test_instance.mean
+    std = np.sqrt(test_instance.var)
+    alpha = test_instance.alpha
+    beta = test_instance.beta
+    rate = test_instance.rate(n)
+
+    coeff = Order2PolynomialStep(test_instance.alpha)
+    empirical_res = distrib_result(coeff)
+
+    plt.figure()
+    plt.title("Empirical vs theoretical result : alpha = {0:.2f}".format(alpha))
+    plt.hist(empirical_res*rate, bins=20, density=True, label="empirical histogram")
+    x = np.linspace(mean-3*std, mean+3*std, 1000)
+    y = norm.pdf(x, loc=mean, scale=std)
+    plt.plot(x, y, label=test_instance.label)
+    plt.legend(loc="best")
+    plt.show()
+    return
+
+for i in range(len(test_instances_order2)):
+    tcl_order2(test_instances_order2[i])
