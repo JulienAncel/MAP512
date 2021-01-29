@@ -5,7 +5,6 @@ Created on Fri Jan 22 11:08:03 2021
 @author: Ancel
 """
 
-
 import numpy as np
 
 ########## Calcul de I pour phi = 1/(1+x^2) ##########
