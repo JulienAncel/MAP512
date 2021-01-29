@@ -1,3 +1,5 @@
+import numpy as np
+
 class Model:
     def __init__(self,b,sigma,X0,d):
         '''
@@ -25,4 +27,6 @@ class OrnsteinUhlenbeck(Model):
     def __init__(self, theta, mu, sigma_, X0, d):
         b = lambda x: theta * (mu - x)
         sigma = lambda x: sigma_
+        self.derivee_sigma = lambda x : lambda t : 0 #pour ordre 2
+        self.Ab = lambda x : theta**2 * x
         super().__init__(b, sigma, X0, d)
