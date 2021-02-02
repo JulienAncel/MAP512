@@ -1,1 +1,1 @@
-__all__ = ["euler", "process", "steps"]
+__all__ = ["euler", "process", "steps", "talay"]

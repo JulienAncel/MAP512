@@ -1,5 +1,5 @@
 import os
-os.chdir("C:/Users/Ancel/Desktop/MAP512")
+#os.chdir("C:/Users/Ancel/Desktop/MAP512")
 
 from src.model.processes import OrnsteinUhlenbeck
 from src.model.steps import ClassicalStep, PolynomialStep, LogarithmicStep, Order2PolynomialStep
@@ -211,7 +211,6 @@ def single_curve_order2(
         simulation = Talay_OU(model, coeff)
         simulation.run(n)
         simulation.test_functions(nb_functions, MODE_DISPLAY=True)
-
 
     run(Order2PolynomialStep(1/5))
     plt.title("Curve with different coefficients")
