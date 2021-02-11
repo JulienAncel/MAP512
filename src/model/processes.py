@@ -38,3 +38,27 @@ class OrnsteinUhlenbeck(Process):
     
     def __str__(self):
         return "Ornstein Uhlenbeck process with dX_t = {}*({}-X_t)*dt + {}*dB_t".format(self.theta, self.mu, self.sigma_)
+
+class MultipleInvariantMeasure(Process):
+    '''
+    A process with multiple invariant measure possible
+    '''
+    def __init__(self, X0, c_):
+        '''
+        X0 : the initial position
+        c  : the drift value
+        '''
+        def b_(x):
+            if abs(x) >= 3:
+                return -2 * (x - 3*np.sign(x))
+            else:
+                return -x**3/18 + x/2
+        self.b = b_
+        self.c = c_
+        self.sigma = lambda x : c_*x
+        self.X0 = X0
+        self.d = 1
+
+    def __str__(self):
+        return "A model with multiple invariant measure in -3, 0, 3 with X0={} ,c={}".format(self.X0, self.c)
+
