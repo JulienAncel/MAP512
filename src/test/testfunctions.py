@@ -30,6 +30,23 @@ test_collection.append(TestFunction(
     "A(1 / (1 + x**2) )")
     )
 
+#3 Cas loi de cauchy (1,0)
+test_collection.append(TestFunction(
+    lambda x : (4*x-2*x**2-2)/(1+x**2)**3 - 4*x/((1+x**2)**4 + 4*x**2) ,
+    "A(1 / (1 + x**2) )")
+    )
+
+#4 Cas loi hyperbolique secante
+test_collection.append(TestFunction(
+    lambda x : (6*x**2 - 2) / (1+x**2)**3 - 0.5*np.pi * np.tanh(np.pi * x / (1+x**2)**2 ),
+    "A(1 / (1 + x**2) )")
+    )
+
+#4 Cas loi logistique(0,1)
+test_collection.append(TestFunction(
+    lambda x : (6*x**2 - 2) / (1+x**2)**3 - np.tanh(x / (1+x**2)**2 ),
+    "A(1 / (1 + x**2) )")
+    )
 '''
 #3
 
