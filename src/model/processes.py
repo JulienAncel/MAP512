@@ -62,3 +62,26 @@ class MultipleInvariantMeasure(Process):
     def __str__(self):
         return "A model with multiple invariant measure in -3, 0, 3 with X0={} ,c={}".format(self.X0, self.c)
 
+class PotentialProcess(Process):
+    '''
+    A process of invariant measure with a potential.
+    Solution of the SDE : 
+        dXt = - grad(U)(Xt) dt + sqrt(2) dWt
+        with U a C^1 function (at least)
+    '''
+    def __init__(self, U, gradU, X0, d):
+        '''
+        Parameters
+        ----------
+        U : function R^d->R
+            The potential.
+        gradU : function R^d -> R^d
+            The gradient of U.
+        X0 :vector R^d
+            Initial Value - deterministic.
+        d : int
+            dimension.
+        '''
+        b = lambda x : -gradU(x)
+        sigma = lambda x : np.sqrt(2)*np.eye(d)
+        super().__init__(b, sigma, X0, d)
