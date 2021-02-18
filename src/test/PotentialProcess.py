@@ -115,9 +115,9 @@ def heatmap(
 ############# for f = A.phi and phi(x) = 1/(1+x^2)                ##########
 ############ DEPEND ON U                                         ##########
         #à jour hyperbolic secant
-I = 0.21672253 #MC estimation n = 1e7 #change according to U
-m = 0.0016459 #change according to U
-hat_m = -0.108604 #MC estimation n = 1e7 #change according to U
+I = 0.37372441  #MC estimation n = 1e7 #change according to U
+m = 0 #change according to U
+hat_m = 0 #MC estimation n = 1e7 #change according to U
 ##### TCL test instances #####
 class TCL_Test:
     def __init__(
@@ -188,10 +188,10 @@ test_instances.append(TCL_Test(
 
 def tcl(
         test_instance=TCL_Test(),
-        nth_function=4, #CHANGE ACCORDING TO U
-        U=lambda x : np.log(2*np.cosh(0.5*np.pi*x)),
-        gradU=lambda x : 0.5*np.pi*np.tanh(0.5*np.pi*x),
-        label = "Potential U(x) = hyberbolic secant",
+        nth_function=6, #CHANGE ACCORDING TO U
+        U=lambda x : np.abs(x) - np.log(2),
+        gradU=lambda x : 1*(x>=0) - 1*(x<0),
+        label = "Potential U(x) = laplace \n",
         X0=1,
         d=1,
         n=int(1e4),

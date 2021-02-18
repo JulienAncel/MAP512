@@ -15,12 +15,29 @@ print("Intégrale I : {}".format(res/n))
 n = int(1e6)
 res=0
 for i in range(n):
-    X = 2/np.pi * hypsecant.rvs(size=1)
-    res += 4 * X**2 / (1 + X**2)**4
+    X = 2/np.pi * hypsecant.rvs(size=1)[0]
+    res += 8 * X**2 / (1 + X**2)**4
 print("Intégrale I hyperbolic secant: {}".format(res/n))
 '''
+#Cas logistique
+n = int(1e6)
+res=0
+for i in range(n):
+    X = np.random.logistic(0,1,size=1)
+    res += 8 * X**2 / (1 + X**2)**4
+print("Intégrale I logistic: {}".format(res/n))
+
+#Cas Laplace
+n = int(1e6)
+res=0
+for i in range(n):
+    X = np.random.laplace(0,1,size=1)
+    res += 8 * X**2 / (1 + X**2)**4
+print("Intégrale I laplace : {}".format(res/n))
+
 ########## Calcul de m pour phi = 1/(1+x^2) ##########
 '''
+#cas OU
 m = 0
 
 print("Intégrale m : {}".format(m))
@@ -29,11 +46,21 @@ print("Intégrale m : {}".format(m))
 n = int(1e6)
 res=0
 for i in range(n):
-    X = 2/np.pi * hypsecant.rvs(size=1)
+    X = 2/np.pi * hypsecant.rvs(size=1)[0]
     X = np.sqrt(2)*X
     res += 24* (X-X**3) / (1+X**2)**4
-print("Intégrale m hyperbolic secant: {}".format(res/n))
+print("Intégrale m hyperbolic secant: {}".format(-res/(6*n)))
+
+#Cas logistic
+n = int(1e6)
+res=0
+for i in range(n):
+    X = 2/np.pi * hypsecant.rvs(size=1)[0]
+    X = np.sqrt(2)*X
+    res += 24* (X-X**3) / (1+X**2)**4
+print("Intégrale m logistic: {}".format(res/n))
 '''
+
 
 ########## Calcul de hat(m) pour phi = 1/(1+x^2) ##########
 
@@ -49,7 +76,7 @@ for i in range(n):
     hat_m += phi4(X) + 0.5 * 0.25 * X**2 * ( 6*X**2 - 2) / ( 1 + X**2)**3
 
 print("Intégrale hat_m : {}".format(-hat_m/n))
-'''
+
 
 #Cas hyperbolic secant
 n = int(1e6)
@@ -60,3 +87,4 @@ for i in range(n):
     res += phi4(X) + 0.5 * 0.25 * X**2 * ( 6*X**2 - 2) / ( 1 + X**2)**3
 
 print("Intégrale hat_m : {}".format(-res/n))
+'''

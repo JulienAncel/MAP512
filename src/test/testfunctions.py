@@ -38,13 +38,19 @@ test_collection.append(TestFunction(
 
 #4 Cas loi hyperbolique secante
 test_collection.append(TestFunction(
-    lambda x : (6*x**2 - 2) / (1+x**2)**3 - 0.5*np.pi * np.tanh(np.pi * x / (1+x**2)**2 ),
+    lambda x : (6*x**2 - 2) / (1+x**2)**3 + np.pi * np.tanh(np.pi * 0.5 *x ) * x / (1+x**2)**2,
     "A(1 / (1 + x**2) )")
     )
 
-#4 Cas loi logistique(0,1)
+#5 Cas loi logistique(0,1)
 test_collection.append(TestFunction(
-    lambda x : (6*x**2 - 2) / (1+x**2)**3 - np.tanh(x / (1+x**2)**2 ),
+    lambda x : (6*x**2 - 2) / (1+x**2)**3 + 2*np.tanh(x / 2 ) * x / (1+x**2)**2,
+    "A(1 / (1 + x**2) )")
+    )
+
+#6 Cas loi Laplace(0,1)
+test_collection.append(TestFunction(
+    lambda x : (6*x**2 - 2) / (1+x**2)**3 - (x>=0)* 2* x / (1+x**2)**2 + (x<0)* 2* x / (1+x**2)**2,
     "A(1 / (1 + x**2) )")
     )
 '''
