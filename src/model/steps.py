@@ -57,6 +57,20 @@ class PolynomialStep(Step):
     def __str__(self):
         return ("polynomial steps with alpha=%.2f, beta=%.2f"%(self.alpha, self.beta))
 
+class PolynomialShiftedStep(Step):
+    '''
+    The Polynomial coefficient with 1/(n^alpha) for gamma and 1/(n^beta) for eta on step n.
+    '''
+    def __init__(self, alpha=1, beta=1, shift=0):
+        gamma = lambda n : 1 / (n + shift + 1) ** alpha
+        eta = lambda n : 1 / (n + shift + 1) ** beta
+        super().__init__(gamma, eta)
+        self.alpha = alpha
+        self.beta = beta
+
+    def __str__(self):
+        return ("polynomial steps with alpha=%.2f, beta=%.2f"%(self.alpha, self.beta))
+
 class Order2PolynomialStep(Step):
     '''
     The Polynomial coefficient with 1/(n^alpha) for gamma and (gamma(n)+gamma(n-1))/2 for eta on step n.

@@ -1,5 +1,5 @@
 from src.model.processes import MultipleInvariantMeasure
-from src.model.steps import PolynomialStep
+from src.model.steps import PolynomialStep, PolynomialShiftedStep
 from src.model.euler import Euler
 from src.test.testfunctions import test_collection
 import numpy as np
@@ -9,9 +9,10 @@ from tqdm import tqdm
 l = len(test_collection)
 nb_functions=list(range(l))
 
-def histogram_test(X0=1, c=0.5, n=int(1e5)):
+def histogram_test(X0=1, c=0.5, n=int(1e5), shift=0):
     model = MultipleInvariantMeasure(X0, c)
-    coeff = PolynomialStep(1/3, 1/3)
+    #coeff = PolynomialStep(1/3, 1/3)
+    coeff = PolynomialShiftedStep(1/3, 1/3, shift)
     simulation = Euler(model, coeff)
     simulation.run(n)
     nu_x, nu_x2 = simulation.test_functions([0, 1])
@@ -28,9 +29,9 @@ def histogram_test(X0=1, c=0.5, n=int(1e5)):
     plt.title("Different invariant measures test. X0={}, c={}\nnu(x)={:.2f}, nu(x^2)={:.2f}\nn={}".format(X0, c, nu_x[0], nu_x2[0],n))
     plt.show()
 
-def limite_law(X0=1, c=0.5, n=int(1e5), M=int(1e3)):
+def limite_law(X0=1, c=0.5, n=int(1e5), M=int(1e3), shift=0):
     model = MultipleInvariantMeasure(X0, c)
-    coeff = PolynomialStep(1/3, 1/3)
+    coeff = PolynomialShiftedStep(1/3, 1/3, shift)
     simulation = Euler(model, coeff)
     means = []
     for i in tqdm(range(M)):
@@ -42,7 +43,7 @@ def limite_law(X0=1, c=0.5, n=int(1e5), M=int(1e3)):
             )
     plt.xlabel("x_mean")
     plt.ylabel("density")
-    plt.title("Histogram of the mean(x) for n = {}, M={}\n X0={}, c={}".format(n, M, X0, c))
+    plt.title("Histogram of the mean(x) for n = {}, M={}\n X0={}, c={}, shift={}".format(n, M, X0, c, shift))
     plt.show()
 
 def potential():
